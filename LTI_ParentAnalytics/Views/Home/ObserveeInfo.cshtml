@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "ObserveeInfo";
+}
+@foreach (var user in @ViewBag.Entries)
+{
+    <h1>@user.Name</h1>
+    <ul>
+        @foreach (var course in @ViewBag.Courses[user.Id])
+        {
+            <li>
+                <input type="checkbox" checked>
+                <i></i>
+                <h2>@course.Name (@course.Id)</h2>
+                @{
+                    var pps = ViewBag.ParticipationsByStudent[user.Id][course.Id];
+                }
+
+
+                @foreach (var pp in pps)
+                {
+                   
+                        <p><span>@pp.Url at @pp.CreatedAt</span></p>
+                    
+                }
+
+
+            </li>
+        }
+    </ul>
+}

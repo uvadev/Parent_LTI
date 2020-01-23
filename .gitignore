@@ -2,6 +2,7 @@
 docs/
 UVACanvasAccess/docs
 .idea/
+.vs/
 packages/
 */bin/
 */obj/
