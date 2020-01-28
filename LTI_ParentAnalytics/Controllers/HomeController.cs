@@ -10,6 +10,7 @@ using UVACanvasAccess.Structures.Users;
 using UVACanvasAccess.Structures.Courses;
 using static UVACanvasAccess.ApiParts.Api;
 using UVACanvasAccess.Structures.Analytics;
+using UVACanvasAccess.Structures.Assignments;
 
 namespace LTI_ParentAnalytics.Controllers
 {
@@ -33,9 +34,9 @@ namespace LTI_ParentAnalytics.Controllers
 
             var uId = api.StreamObservees(userId);
 
-            ViewBag.Entries = uId.CollectAsync().Result;
-
             var kidList = uId.CollectAsync().Result;
+            
+            ViewBag.Entries = kidList;
 
             var coursesByStudent = new Dictionary<ulong, IEnumerable<Course>>(); // userId -> course[]
             var courseDataByStudent = new Dictionary<ulong, Dictionary<ulong, UserParticipation>>(); // userId -> { courseId -> data }
@@ -55,8 +56,11 @@ namespace LTI_ParentAnalytics.Controllers
                                                                            includes: IndividualLevelCourseIncludes.Term)
                                                                 .Result)
                                     );
+                var streamMissingAssignments = api.StreamMissingAssignments(kid.Id);
+                
+                ViewBag.StreamMissingAssignments = streamMissingAssignments.CollectAsync().Result;
+                
                 ViewBag.Courses = coursesByStudent;
-
                 courseDataByStudent.Add(kid.Id, new Dictionary<ulong, UserParticipation>());
                 participationsByStudent.Add(kid.Id, new Dictionary<ulong, IEnumerable<UserParticipationEvent>>());
                 //assDataByStudent.Add(kid.Id, new Dictionary<ulong, IEnumerable<UserAssignmentData>>()); 
@@ -65,7 +69,8 @@ namespace LTI_ParentAnalytics.Controllers
                 {
                     var data = api.GetUserCourseParticipationData(kid.Id, course.Id).Result;
                     courseDataByStudent[kid.Id].Add(course.Id, data);
-                    participationsByStudent[kid.Id].Add(course.Id, data.Participations.Take(1)); //take more than 1
+                    participationsByStudent[kid.Id].Add(course.Id, data.Participations.Reverse()
+                                                                                      .Take(10));
 
                     //var assData = api.GetUserCourseAssignmentData(kid.Id, course.Id).CollectAsync()
                     //                                                                .Result;

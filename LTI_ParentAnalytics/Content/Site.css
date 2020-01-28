@@ -32,7 +32,7 @@ body {
     left: 50%;
     margin: 90px 0;
     transform: translate(-50%, 0);
-    box-shadow: 0 10px 0 0 #ff6873 inset;
+    box-shadow: 0 10px 0 0 #008000 inset;
     background-color: #fefffa;
     max-width: 60%;
     padding: 30px;
@@ -49,8 +49,11 @@ body {
     }
 }
 
-h1, h2 {
-    color: #ff6873;
+h1 {
+    color: #015dad;
+}
+h2{
+    color: #013e73;
 }
 
 h1 {
@@ -106,10 +109,8 @@ ul {
 
     ul li {
         position: relative;
-        padding: 0;
         margin: 0;
-        padding-bottom: 4px;
-        padding-top: 18px;
+        padding: 18px 0 4px;
         border-top: 1px dotted #dce7eb;
     }
 
@@ -171,7 +172,7 @@ ul {
             ul li i:before, ul li i:after {
                 content: "";
                 position: absolute;
-                background-color: #ff6873;
+                background-color: #008000;
                 width: 3px;
                 height: 9px;
             }
