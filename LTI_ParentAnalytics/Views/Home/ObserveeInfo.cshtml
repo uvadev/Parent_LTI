@@ -4,13 +4,6 @@
 @foreach (var user in @ViewBag.Entries)
 {
     <h1>@user.Name</h1>
-                  
-    var kma =  ViewBag.StreamMissingAssignments[user.Id];
-    foreach(var ma in kma)
-    {
-        <p>@ma.name</p>
-    }
-
     <ul>
         @foreach (var course in @ViewBag.Courses[user.Id])
         {
@@ -23,7 +16,7 @@
             }
             @foreach (var pp in pps)
                 {
-                    <p><span>@pp.CreatedAt @pp.Url</span></p>
+                    <p>@pp.CreatedAt <a href="@pp.Url">@pp.Url</a></p>
                 }
             </li>
         }
