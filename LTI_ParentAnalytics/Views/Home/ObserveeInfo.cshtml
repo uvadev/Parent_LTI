@@ -16,7 +16,7 @@
             }
             @foreach (var pp in pps)
                 {
-                    <p>@pp.CreatedAt <a href="@pp.Url">@pp.Url</a></p>
+                    <p>@pp.CreatedAt <a href="@pp.Url">@pp.Url.Split('/')[5] - @pp.Url.Substring(pp.Url.LastIndexOf('/')+1).Split('?')[0]</a></p>
                 }
             </li>
         }
